@@ -1,6 +1,6 @@
 /*The MainWindow class of the ImageEvolverQt program
  * Copyright (C) 2009-2010  Aaron Fan
- * Version 3.0
+ * Version 3.1
  *
  *This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	fileopener(this, Qt::Dialog),
 	updateTimer(this), autosaveTimer(this),
 	saveIncremental(false), updateImage(true),
-	version("v3.0")
+	version("v3.1")
 {
     ui->setupUi(this);
 
@@ -46,6 +46,7 @@ MainWindow::~MainWindow()
 void MainWindow::loadImage()
 {
     bool wasRunning = imageMutator.mutateIsOn;
+	imageMutator.stopMutation();
 
     updateTimer.stop();
     autosaveTimer.stop();
@@ -73,7 +74,7 @@ void MainWindow::loadImage()
         updateCurrentImage();
         updateStatus();
 
-        ui->startButton->setText(QString("Start"));
+		ui->startButton->setText(QString("S&tart"));
         ui->startButton->setEnabled(true);
         ui->loadSVGButton->setEnabled(true);
         ui->backgroundColorButton->setEnabled(true);
@@ -89,6 +90,7 @@ void MainWindow::loadImage()
 void MainWindow::loadSVG()
 {
     bool wasRunning = imageMutator.mutateIsOn;
+	imageMutator.stopMutation();
 
     updateTimer.stop();
     autosaveTimer.stop();
@@ -124,7 +126,7 @@ void MainWindow::toggleMutation()
         updateTimer.start(Constants::C_UPDATE_SPEED);
         autosaveTimer.start(Constants::C_AUTOSAVE_SPEED);
         imageMutator.startMutation();
-        ui->startButton->setText(QString("Stop"));
+		ui->startButton->setText(QString("S&top"));
         ui->setShapesButton->setEnabled(false);
     }
     else
@@ -132,7 +134,7 @@ void MainWindow::toggleMutation()
         updateTimer.stop();
         autosaveTimer.stop();
         imageMutator.stopMutation();
-        ui->startButton->setText(QString("Start"));
+		ui->startButton->setText(QString("S&tart"));
         ui->setShapesButton->setEnabled(true);
     }
 }
@@ -145,6 +147,7 @@ void MainWindow::saveIncrementalChanged(bool input)
 void MainWindow::saveImage()
 {
     bool wasRunning = imageMutator.mutateIsOn;
+	imageMutator.stopMutation();
 
     updateTimer.stop();
     autosaveTimer.stop();
@@ -174,6 +177,7 @@ void MainWindow::saveImage()
     }
     if (wasRunning)
     {
+		imageMutator.startMutation();
         updateTimer.start(Constants::C_UPDATE_SPEED);
         autosaveTimer.start(Constants::C_AUTOSAVE_SPEED);
     }
@@ -227,7 +231,7 @@ void MainWindow::updateStatus()
 {
     QString report =
         "Mutation Count: " + QString::number(imageMutator.getGoodMutationCount()) + "/" + QString::number(imageMutator.getTestedMutationCount()) +
-        "   Score: " + QString::number(imageMutator.getCurrentScore()) +
+		"   Score: " + QString::number(imageMutator.getCurrentScore()) + "%" +
         "   Number of Polygons: " + QString::number(imageMutator.getNumberOfPolygons()) +
         "   Number of Threads: " + QString::number(imageMutator.countThreads());
 
@@ -262,6 +266,7 @@ void MainWindow::resizeEvent(QResizeEvent *event)
     {
         updateOriginalImage();
         updateCurrentImage();
+		event->accept();
     }
 }
 

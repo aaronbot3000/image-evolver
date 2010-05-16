@@ -1,12 +1,23 @@
-The Image Evolver
+The Image Evolver version 3.1
 
 Compiling:
-qmake
-make
+	Requires the standard Qt Libraries and g++
 
-Load images, run, and watch.
+	run in the directory:
+	qmake
+	make
 
-Stopping has a short delay; please be patient.
+Run with ./ImageEvovler or ImageEvolver.exe
+
+Load an image, run, and watch.
+
+This uses a genetic algorithm, so it might take a bit to get something recognizable, 
+and even longer to get something cool. Please be patient!
+
+Check the "Save Incrementally" box to save an image every so often to make a spiffy slideshow.
+
+Stopping no longer has a short delay! Yay!
+
 
 Enjoy!
 
@@ -14,7 +25,7 @@ mumbo jumbo:
 
 The ImageEvolver
  Copyright (C) 2009-2010  Aaron Fan
- Version 3.0
+ Version 3.1
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

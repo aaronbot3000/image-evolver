@@ -1,6 +1,6 @@
 /*The Pixelcounter class of the ImageEvolverQt program
  * Copyright (C) 2009-2010  Aaron Fan
- * Version 3.0
+ * Version 3.1
  *
  *This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 #include <QDebug>
 #include <QThread>
 #include <QRgb>
-#include <QSemaphore>
 
 #include <math.h>
 
@@ -37,7 +36,7 @@ class PixelCounter : public QThread
 
     public:
         PixelCounter();
-        PixelCounter(int i, int t, QSemaphore *s);
+		PixelCounter(int i, int t);
         void setImages(QRgb *o, QRgb *c, int w, int h);
 
         void startCounting();
@@ -47,12 +46,7 @@ class PixelCounter : public QThread
         QRgb *original;
         QRgb *current;
         long diff;
-        //double orig;
         int threadNumber, pixels, totalThreads, startPixel, endPixel;
-        QSemaphore *semaphore;
-
-    private slots:
-        void end();
 
     protected:
         void run();

@@ -1,0 +1,12 @@
+v3.1
+
+Add percent sign after score
+Fix loading SVGs and changing background images crashing the program
+	Switch from semaphores, which tend to crash the program, to QThread::wait()
+Speed up stopping by doign it the proper way
+Add Alt hotkeys
+Fix some issues with restarting after almost loading images/SVGs and saving
+
+v3.0
+
+Use more portable Qt threads instead of the library dependent openmp parallelization
