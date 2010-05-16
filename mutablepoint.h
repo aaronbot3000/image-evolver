@@ -39,8 +39,8 @@ class MutablePoint : public QPointF
         void reset();
 
     private: 
+		const int xBounds, yBounds;
         float prevX, prevY;
-        const int xBounds, yBounds;
         bool changed;
 };
 

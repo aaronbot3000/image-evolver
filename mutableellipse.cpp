@@ -19,9 +19,10 @@
 #include "mutableellipse.h"
 
 MutableEllipse::MutableEllipse(int xB, int yB) :
+	topLeft(xB, yB, 0, 0), bottomRight(xB, yB, 0, 0),
     color(Utils::getRand(256), Utils::getRand(256),Utils::getRand(256), Utils::getRand(60)+20),
-    changed(false), topLeft(xB, yB, 0, 0), bottomRight(xB, yB, 0, 0),
-    prevRed(0), prevGreen(0), prevBlue(0), prevAlpha(0)
+	prevRed(0), prevGreen(0), prevBlue(0), prevAlpha(0),
+	changed(false)
 {
     int initialX = Utils::getRand(xB);
     int initialY = Utils::getRand(yB);
@@ -37,8 +38,8 @@ MutableEllipse::MutableEllipse(int xB, int yB) :
 
 MutableEllipse::MutableEllipse(int xB, int yB, float x1, float y1, float x2, float y2, QColor c) :
     topLeft(xB, yB, x1, y1), bottomRight(xB, yB, x2, y2),
-    changed(false),
-    prevRed(0), prevGreen(0), prevBlue(0), prevAlpha(0)
+	prevRed(0), prevGreen(0), prevBlue(0), prevAlpha(0),
+	changed(false)
 {
     color = c;
 }

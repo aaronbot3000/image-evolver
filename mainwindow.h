@@ -71,11 +71,11 @@ class MainWindow : public QMainWindow
         void updateStatus();
         void updateCurrentImage();
         void updateOriginalImage();
+		Ui::MainWindow *ui;
         QFileDialog fileopener;
         QString autosaveFilename;
         QString incrementalFilename;
         QTimer updateTimer, autosaveTimer;
-        Ui::MainWindow *ui;
         ImageMutationCore imageMutator;
         bool saveIncremental;
         bool updateImage;

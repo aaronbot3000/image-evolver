@@ -21,9 +21,10 @@
 long ImageMutationCore::currentScore = 0;
 
 ImageMutationCore::ImageMutationCore():
+	mutateIsOn(false),
     original(100, 100, QImage::Format_RGB32),
     current(100, 100, QImage::Format_RGB32),
-    mutateIsOn(false), bestScore(0)
+	bestScore(0)
 {
     shapes.prepend(new BackgroundRect(100, 100, QColor(255, 255, 255, 255)));
     shapesToUse.append(0);
@@ -329,14 +330,14 @@ void ImageMutationCore::mutate()
     bool changed = false;
 
     bool added;
-    int addedIndex;
+	int addedIndex = 0;
 
-    bool moved;
-    int moveIndex1;
-    int moveIndex2;
+	bool moved;
+	int moveIndex1 = 0;
+	int moveIndex2 = 0;
 
-    bool removed;
-    int removedIndex;
+	bool removed = 0;
+	int removedIndex = 0;
     MutableColorShape *removedShape;
     MutableColorShape *temp;
 
@@ -539,7 +540,7 @@ void ImageMutationCore::waitForFinish()
 #   include <mach/mach.h>
 #   include <mach/machine.h>
 #elif defined(Q_OS_WIN32) || defined(Q_OS_WIN64)
-#	include <Windows.h>
+#   include <Windows.h>
 #endif
 
 int ImageMutationCore::countThreads()

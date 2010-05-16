@@ -19,9 +19,11 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    version("v3.0"),
-    QMainWindow(parent), ui(new Ui::MainWindow), fileopener(this, Qt::Dialog),
-    updateTimer(this), autosaveTimer(this), updateImage(true), saveIncremental(false)
+	QMainWindow(parent), ui(new Ui::MainWindow),
+	fileopener(this, Qt::Dialog),
+	updateTimer(this), autosaveTimer(this),
+	saveIncremental(false), updateImage(true),
+	version("v3.0")
 {
     ui->setupUi(this);
 
@@ -189,7 +191,7 @@ void MainWindow::autosave()
 
 void MainWindow::showAbout()
 {
-    AboutDialog ad(this, version);
+    AboutDialog ad(this);
     ad.exec();
 }
 

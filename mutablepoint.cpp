@@ -19,8 +19,9 @@
 #include "mutablepoint.h"
 
 MutablePoint::MutablePoint(int xB, int yB, float x, float y):
-    QPointF(x, y), xBounds(xB), yBounds(yB), changed(false),
-    prevX(0), prevY(0){}
+	QPointF(x, y), xBounds(xB), yBounds(yB),
+	prevX(0), prevY(0),
+	changed(false){}
 
 bool MutablePoint::mutate()
 {

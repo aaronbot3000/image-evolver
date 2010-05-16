@@ -19,8 +19,10 @@
 #include "mutablepolygon.h"
 
 MutablePolygon::MutablePolygon(int xB, int yB): 
-    xBounds(xB), yBounds(yB), addedIndex(-1), removedIndex(-1), changed(false),
-    color(Utils::getRand(256), Utils::getRand(256),Utils::getRand(256), Utils::getRand(60)+20)
+	color(Utils::getRand(256), Utils::getRand(256), Utils::getRand(256), Utils::getRand(60)+20),
+	xBounds(xB), yBounds(yB),
+	addedIndex(-1), removedIndex(-1),
+	changed(false)
 {
     int initialX = Utils::getRand(xBounds);
     int initialY = Utils::getRand(yBounds);

@@ -50,8 +50,8 @@ class MutablePolygon : public MutableColorShape
         QColor color;
         MutablePoint *removedPoint;
         LinkedList<MutablePoint> polygon;
-        int prevRed, prevGreen, prevBlue, prevAlpha, removedIndex, addedIndex;
         const int xBounds, yBounds;
+		int prevRed, prevGreen, prevBlue, prevAlpha, addedIndex, removedIndex;
         bool changed;
 };
 

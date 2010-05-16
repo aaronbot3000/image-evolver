@@ -33,7 +33,7 @@ class AboutDialog : public QDialog
     Q_OBJECT
 
     public:
-		AboutDialog(QWidget *parent = 0, QString version = QString("vX.X.X")): 
+		AboutDialog(QWidget *parent = 0): 
 			QDialog(parent, Qt::Widget), ui(new Ui::AboutDialog)
                         {ui->setupUi(this);}
 		~AboutDialog(){delete ui;}

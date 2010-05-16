@@ -19,8 +19,9 @@
 #include "mutablerectangle.h"
 
 MutableRectangle::MutableRectangle(int xB, int yB) :
+	topLeft(xB, yB, 0, 0), bottomRight(xB, yB, 0, 0),
     color(Utils::getRand(256), Utils::getRand(256),Utils::getRand(256), Utils::getRand(60)+20),
-    changed(false), topLeft(xB, yB, 0, 0), bottomRight(xB, yB, 0, 0),
+	changed(false),
     prevRed(0), prevGreen(0), prevBlue(0), prevAlpha(0)
 {
     int initialX = Utils::getRand(xB);

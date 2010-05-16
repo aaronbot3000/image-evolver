@@ -47,8 +47,8 @@ class MutableEllipse : public MutableColorShape
         MutablePoint topLeft, bottomRight;
         QRectF boundingRect;
         QColor color;
-        bool changed;
         int prevRed, prevGreen, prevBlue, prevAlpha;
+		bool changed;
 };
 
 #endif //MUTABLEELLIPSE_H
