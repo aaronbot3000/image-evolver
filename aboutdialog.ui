@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>304</width>
-    <height>203</height>
+    <height>275</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>160</y>
+     <y>240</y>
      <width>301</width>
      <height>32</height>
     </rect>
@@ -38,11 +38,26 @@
      <x>20</x>
      <y>10</y>
      <width>261</width>
-     <height>141</height>
+     <height>231</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>The Image Evolver v3.0
+Written by Aaron Fan
+
+To use: 
+First load an image
+Then start and watch the magic
+
+Released under the GPL v3
+Uses the Mersenne Twister as 
+written by Agner Fog and 
+available at:
+www.agner.org/random
+</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignHCenter|Qt::AlignTop</set>
    </property>
   </widget>
  </widget>

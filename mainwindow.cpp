@@ -1,6 +1,6 @@
 /*The MainWindow class of the ImageEvolverQt program
- * Copyright (C) 2009  Aaron Fan
- * Version 2.1.0
+ * Copyright (C) 2009-2010  Aaron Fan
+ * Version 3.0
  *
  *This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 #include "mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    version("v2.1.0"),
+    version("v3.0"),
     QMainWindow(parent), ui(new Ui::MainWindow), fileopener(this, Qt::Dialog),
     updateTimer(this), autosaveTimer(this), updateImage(true), saveIncremental(false)
 {
