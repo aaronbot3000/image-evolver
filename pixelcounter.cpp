@@ -61,7 +61,7 @@ void PixelCounter::run()
     diff = diff / orig;
     */
 
-    for (int x=startPixel; x<endPixel; x++)
+    for (unsigned int x=startPixel; x<endPixel; x++)
     {
         diff +=
             (fabs((float)(qRed(current[x]) - qRed(original[x]))) +
@@ -70,7 +70,7 @@ void PixelCounter::run()
     }
 }
 
-long PixelCounter::getDiff()
+unsigned long PixelCounter::getDiff()
 {
     return diff;
 }

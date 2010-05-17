@@ -75,10 +75,12 @@ class MainWindow : public QMainWindow
         QFileDialog fileopener;
         QString autosaveFilename;
         QString incrementalFilename;
-        QTimer updateTimer, autosaveTimer;
+        QTimer updateTimer;
         ImageMutationCore imageMutator;
         bool saveIncremental;
         bool updateImage;
+
+		unsigned int lastUpdate;
 
         const QString version;
 

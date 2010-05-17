@@ -18,19 +18,18 @@
 
 #include "imagemutationcore.h"
 
-long ImageMutationCore::currentScore = 0;
-
 ImageMutationCore::ImageMutationCore():
 	mutateIsOn(false),
 	original(100, 100, QImage::Format_RGB32),
 	current(100, 100, QImage::Format_RGB32),
+	currentScore(0),
 	bestScore(0)
 {
 	shapes.prepend(new BackgroundRect(100, 100, QColor(255, 255, 255, 255)));
 	shapesToUse.append(0);
 
 	cores = countThreads();
-	for (int x=1; x<cores; x++)
+	for (unsigned int x=1; x<cores; x++)
 	{
 		counters.append(new PixelCounter(x, cores));
 	}
@@ -469,12 +468,12 @@ void ImageMutationCore::countScore()
 	currentScore = 0;
 	QRgb* o = (QRgb*)original.scanLine(0);
 	QRgb* c = (QRgb*)current.scanLine(0);
-	int pixels = current.width()*current.height();
+	unsigned int pixels = current.width()*current.height();
 
-	int startPixel = 0;
-	int endPixel = pixels/cores;
+	unsigned int startPixel = 0;
+	unsigned int endPixel = pixels/cores;
 
-	for (int x=startPixel; x<endPixel; x++)
+	for (unsigned int x=startPixel; x<endPixel; x++)
 	{
 		currentScore += fabs((float)(qRed(c[x]) - qRed(o[x]))) +
 			fabs((float)(qGreen(c[x]) - qGreen(o[x]))) +
@@ -497,17 +496,17 @@ void ImageMutationCore::seedPolygons()
 	}
 }
 
-float ImageMutationCore::getCurrentScore()
+double ImageMutationCore::getCurrentScore()
 {
-	return (1.0-((float)bestScore/(float)(255*3*original.width()*original.height())))*100.0;
+	return (1.0-((double)bestScore/(double)(255*3*original.width()*original.height())))*100.0;
 }
 
-int ImageMutationCore::getGoodMutationCount()
+unsigned int ImageMutationCore::getGoodMutationCount()
 {
 	return goodMutationCount;
 }
 
-int ImageMutationCore::getTestedMutationCount()
+unsigned int ImageMutationCore::getTestedMutationCount()
 {
 	return testedMutationCount;
 }

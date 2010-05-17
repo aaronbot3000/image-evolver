@@ -25,31 +25,33 @@
 
 #include <math.h>
 
+// mystery semicolon works mysteriously
 ;namespace core
 {
-    class PixelCounter;
+	class PixelCounter;
 }
 
 class PixelCounter : public QThread
 {
-    Q_OBJECT
+	Q_OBJECT
 
-    public:
-        PixelCounter();
+	public:
+		PixelCounter();
 		PixelCounter(int i, int t);
-        void setImages(QRgb *o, QRgb *c, int w, int h);
+		void setImages(QRgb *o, QRgb *c, int w, int h);
 
-        void startCounting();
-        long getDiff();
+		void startCounting();
+		unsigned long getDiff();
 
-    private:
-        QRgb *original;
-        QRgb *current;
-        long diff;
-        int threadNumber, pixels, totalThreads, startPixel, endPixel;
+	private:
+		QRgb *original;
+		QRgb *current;
+		unsigned long diff;
+		int threadNumber, pixels, totalThreads;
+		unsigned int startPixel, endPixel;
 
-    protected:
-        void run();
+	protected:
+		void run();
 };
 
 #endif // PIXELCOUNTER_H

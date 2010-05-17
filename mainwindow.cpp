@@ -21,8 +21,9 @@
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent), ui(new Ui::MainWindow),
 	fileopener(this, Qt::Dialog),
-	updateTimer(this), autosaveTimer(this),
+	updateTimer(this),
 	saveIncremental(false), updateImage(true),
+	lastUpdate(0),
 	version("v3.1")
 {
     ui->setupUi(this);
@@ -35,7 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
     fileopener.setSidebarUrls(sidebarURLs);
 
     connect(&updateTimer, SIGNAL(timeout()), this, SLOT(update()));
-    connect(&autosaveTimer, SIGNAL(timeout()), this, SLOT(autosave()));
 }
 
 MainWindow::~MainWindow()
@@ -49,7 +49,6 @@ void MainWindow::loadImage()
 	imageMutator.stopMutation();
 
     updateTimer.stop();
-    autosaveTimer.stop();
 
     fileopener.setAcceptMode(QFileDialog::AcceptOpen);
     fileopener.setFileMode(QFileDialog::ExistingFile);
@@ -73,6 +72,7 @@ void MainWindow::loadImage()
         updateOriginalImage();
         updateCurrentImage();
         updateStatus();
+		lastUpdate = 0;
 
 		ui->startButton->setText(QString("S&tart"));
         ui->startButton->setEnabled(true);
@@ -83,7 +83,6 @@ void MainWindow::loadImage()
     {
         imageMutator.startMutation();
         updateTimer.start(Constants::C_UPDATE_SPEED);
-        autosaveTimer.start(Constants::C_AUTOSAVE_SPEED);
     }
 }
 
@@ -93,7 +92,6 @@ void MainWindow::loadSVG()
 	imageMutator.stopMutation();
 
     updateTimer.stop();
-    autosaveTimer.stop();
 
     fileopener.setAcceptMode(QFileDialog::AcceptOpen);
     fileopener.setFileMode(QFileDialog::ExistingFile);
@@ -115,7 +113,6 @@ void MainWindow::loadSVG()
     {
         imageMutator.startMutation();
         updateTimer.start(Constants::C_UPDATE_SPEED);
-        autosaveTimer.start(Constants::C_AUTOSAVE_SPEED);
     }
 }
 
@@ -124,7 +121,6 @@ void MainWindow::toggleMutation()
     if (!imageMutator.mutateIsOn)
     {
         updateTimer.start(Constants::C_UPDATE_SPEED);
-        autosaveTimer.start(Constants::C_AUTOSAVE_SPEED);
         imageMutator.startMutation();
 		ui->startButton->setText(QString("S&top"));
         ui->setShapesButton->setEnabled(false);
@@ -132,7 +128,6 @@ void MainWindow::toggleMutation()
     else
     {
         updateTimer.stop();
-        autosaveTimer.stop();
         imageMutator.stopMutation();
 		ui->startButton->setText(QString("S&tart"));
         ui->setShapesButton->setEnabled(true);
@@ -150,7 +145,6 @@ void MainWindow::saveImage()
 	imageMutator.stopMutation();
 
     updateTimer.stop();
-    autosaveTimer.stop();
 
     fileopener.setAcceptMode(QFileDialog::AcceptSave);
     fileopener.setFileMode(QFileDialog::AnyFile);
@@ -179,7 +173,6 @@ void MainWindow::saveImage()
     {
 		imageMutator.startMutation();
         updateTimer.start(Constants::C_UPDATE_SPEED);
-        autosaveTimer.start(Constants::C_AUTOSAVE_SPEED);
     }
 }
 
@@ -189,7 +182,7 @@ void MainWindow::autosave()
     if (saveIncremental)
     {
         QDateTime theTime = QDateTime::currentDateTime();
-        imageMutator.saveBestImage(incrementalFilename + theTime.toString(QString("ddMMyyhhmm")) + QString(".png"));
+        imageMutator.saveBestImage(incrementalFilename + theTime.toString(QString("ddMMyyhhmmsszzz")) + QString(".png"));
     }
 }
 
@@ -225,6 +218,12 @@ void MainWindow::update()
     updateStatus();
     if (updateImage)
         updateCurrentImage();
+	unsigned int goodMuts = imageMutator.getGoodMutationCount();
+	if (goodMuts - lastUpdate > (unsigned int)Constants::C_AUTOSAVE_SPEED)
+	{
+		lastUpdate = goodMuts;
+		autosave();
+	}
 }
 
 void MainWindow::updateStatus()

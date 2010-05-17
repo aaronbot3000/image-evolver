@@ -27,5 +27,5 @@ int Constants::C_DELTA_COLOR(30);       //30
 int Constants::C_ADD_SHAPE(500);	//700
 int Constants::C_MOVE_SHAPE(700);	//1500
 int Constants::C_REMOVE_SHAPE(500);	//700
-int Constants::C_UPDATE_SPEED(500);
-int Constants::C_AUTOSAVE_SPEED(300000); // 5 minutes
+int Constants::C_UPDATE_SPEED(500); // 0.5 seconds
+int Constants::C_AUTOSAVE_SPEED(1000); // 1000 beneficial mutations

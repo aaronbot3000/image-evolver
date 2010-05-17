@@ -67,9 +67,9 @@ class ImageMutationCore : public QThread
         void startMutation();
         void stopMutation();
         void setBackground(QColor &color);
-        float getCurrentScore();
-        int getGoodMutationCount();
-        int getTestedMutationCount();
+        double getCurrentScore();
+        unsigned int getGoodMutationCount();
+        unsigned int getTestedMutationCount();
         int getNumberOfPolygons();
         QImage & getCurrentImage();
         QImage & getOriginalImage();
@@ -99,8 +99,8 @@ class ImageMutationCore : public QThread
         LinkedList<MutableColorShape> shapes;
         LinkedList<PixelCounter> counters;
 
-        int goodMutationCount, testedMutationCount, cores;
-        static long currentScore;
+        unsigned int goodMutationCount, testedMutationCount, cores;
+        unsigned long currentScore;
         double bestScore;
 
     protected:
