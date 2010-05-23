@@ -1,9 +1,16 @@
+v3.2
+
+Fix autosaving. It now autosaves every 1000 good mutations instead of every
+	100 minutes (oops).
+Support for even bigger images. The absolute limit? I'm not too sure.
+Fix mystery lines that would appear in the saved images.
+
 v3.1
 
 Add percent sign after score
 Fix loading SVGs and changing background images crashing the program
 	Switch from semaphores, which tend to crash the program, to QThread::wait()
-Speed up stopping by doign it the proper way
+Speed up stopping by doing it the proper way
 Add Alt hotkeys
 Fix some issues with restarting after almost loading images/SVGs and saving
 

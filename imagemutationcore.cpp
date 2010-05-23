@@ -1,6 +1,6 @@
 /*The ImageMutationCore class of the ImageEvolverQt program
  * Copyright (C) 2009-2010  Aaron Fan
- * Version 3.1
+ * Version 3.2
  *
  *This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ ImageMutationCore::ImageMutationCore():
 {
 	shapes.prepend(new BackgroundRect(100, 100, QColor(255, 255, 255, 255)));
 	shapesToUse.append(0);
-
+	
 	cores = countThreads();
 	for (unsigned int x=1; x<cores; x++)
 	{
@@ -181,6 +181,7 @@ bool ImageMutationCore::loadImage(QString &path)
 			painter.end();
 		current = QImage(original.width(), original.height(), QImage::Format_RGB32);
 		painter.begin(&current);
+		painter.setRenderHint(QPainter::Antialiasing);
 
 		shapes.removeAll();
 		shapes.prepend(new BackgroundRect(original.width(), original.height(), QColor(255, 255, 255)));
@@ -210,6 +211,7 @@ bool ImageMutationCore::saveBestImage(QString path)
 
 	painter.begin(&best);
 	painter.setRenderHint(QPainter::Antialiasing);
+
 	painter.setPen(Qt::NoPen);
 
 	for (int x = 0; x < shapes.size(); x++)
@@ -219,7 +221,9 @@ bool ImageMutationCore::saveBestImage(QString path)
 
 	painter.end();
 	painter.begin(&current);
-	painter.setRenderHint(QPainter::Antialiasing, false);
+	painter.setRenderHint(QPainter::Antialiasing);
+
+	//painter.setRenderHint(QPainter::Antialiasing, false);
 	painter.setPen(Qt::NoPen);
 
 	bool retValue = best.save(path, "PNG", 100);

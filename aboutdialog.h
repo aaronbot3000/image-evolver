@@ -1,6 +1,6 @@
 /*The AboutDialog class of the ImageEvolverQt program
  * Copyright (C) 2009-2010  Aaron Fan
- * Version 3.1
+ * Version 3.2
  *
  *This program is free software: you can redistribute it and/or modify
  *it under the terms of the GNU General Public License as published by
