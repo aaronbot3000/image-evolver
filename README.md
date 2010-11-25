@@ -1,4 +1,4 @@
-# The Image Evolver version 3.1
+# The Image Evolver version 3.2
 
 ## Compiling:
 	Requires the standard Qt Libraries and g++
@@ -26,7 +26,7 @@ Enjoy!
 
 The ImageEvolver
  Copyright (C) 2009-2010  Aaron Fan
- Version 3.3
+ Version 3.2
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
