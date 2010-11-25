@@ -27,7 +27,7 @@ ImageMutationCore::ImageMutationCore():
 {
 	shapes.prepend(new BackgroundRect(100, 100, QColor(255, 255, 255, 255)));
 	shapesToUse.append(0);
-	
+
 	cores = countThreads();
 	for (unsigned int x=1; x<cores; x++)
 	{
@@ -73,22 +73,27 @@ bool ImageMutationCore::loadSVG(QString &path)
 					attrs = reader.attributes();
 
 					colorString = attrs.value("fill").toString();
-					colorList = colorString.split(QRegExp(QString("[rgb(), ]+")), QString::SkipEmptyParts);
+					colorList = colorString.split(QRegExp(QString("[rgb(), ]+")),
+							QString::SkipEmptyParts);
 
 					opacityString = attrs.value("opacity").toString();
 					opacity = (int)floor(((opacityString.toFloat())*255.0) + 0.5);
 
 					QString points = attrs.value("points").toString();
-					QStringList pointsList = points.split(QRegExp(QString("[ ,]+")), QString::SkipEmptyParts);
+					QStringList pointsList = points.split(QRegExp(QString("[ ,]+")),
+							QString::SkipEmptyParts);
 
 					if (shapes.size() == 0)
 					{
 						shapes.append(new BackgroundRect(original.width(), original.height(),
-									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(), colorList.at(2).toInt(), opacity)));
+									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(),
+										colorList.at(2).toInt(), opacity)));
 					}
 					else
-						shapes.append(new MutablePolygon(original.width(), original.height(), pointsList,
-									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(), colorList.at(2).toInt(), opacity)));
+						shapes.append(new MutablePolygon(original.width(),
+									original.height(), pointsList,
+									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(),
+										colorList.at(2).toInt(), opacity)));
 				}
 
 				else if (reader.name() == "rect")
@@ -96,7 +101,8 @@ bool ImageMutationCore::loadSVG(QString &path)
 					attrs = reader.attributes();
 
 					colorString = attrs.value("fill").toString();
-					colorList = colorString.split(QRegExp(QString("[rgb(), ]+")), QString::SkipEmptyParts);
+					colorList = colorString.split(QRegExp(QString("[rgb(), ]+")),
+							QString::SkipEmptyParts);
 
 					opacityString = attrs.value("opacity").toString();
 					opacity = (int)floor(((opacityString.toFloat())*255.0) + 0.5);
@@ -104,7 +110,8 @@ bool ImageMutationCore::loadSVG(QString &path)
 					if (shapes.size() == 0)
 					{
 						shapes.append(new BackgroundRect(original.width(), original.height(),
-									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(), colorList.at(2).toInt(), opacity)));
+									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(),
+										colorList.at(2).toInt(), opacity)));
 					}
 
 					else
@@ -121,8 +128,10 @@ bool ImageMutationCore::loadSVG(QString &path)
 						QString hString = attrs.value("height").toString();
 						float h = hString.toFloat();
 
-						shapes.append(new MutableRectangle(original.width(), original.height(), x, y, w, h,
-									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(), colorList.at(2).toInt(), opacity)));
+						shapes.append(new MutableRectangle(original.width(),
+									original.height(), x, y, w, h,
+									QColor(colorList.at(0).toInt(), colorList.at(1).toInt(),
+										colorList.at(2).toInt(), opacity)));
 					}
 				}
 
@@ -131,7 +140,8 @@ bool ImageMutationCore::loadSVG(QString &path)
 					attrs = reader.attributes();
 
 					colorString = attrs.value("fill").toString();
-					colorList = colorString.split(QRegExp(QString("[rgb(), ]+")), QString::SkipEmptyParts);
+					colorList = colorString.split(QRegExp(QString("[rgb(), ]+")),
+							QString::SkipEmptyParts);
 
 					opacityString = attrs.value("opacity").toString();
 					opacity = (int)floor(((opacityString.toFloat())*255.0) + 0.5);
@@ -148,8 +158,38 @@ bool ImageMutationCore::loadSVG(QString &path)
 					QString ryString = attrs.value("ry").toString();
 					float ry = ryString.toFloat();
 
-					shapes.append(new MutableEllipse(original.width(), original.height(), cx - rx, cy - ry, cx + rx, cy + ry,
-								QColor(colorList.at(0).toInt(), colorList.at(1).toInt(), colorList.at(2).toInt(), opacity)));
+					shapes.append(new MutableEllipse(original.width(),
+								original.height(), cx - rx, cy - ry, cx + rx, cy + ry,
+								QColor(colorList.at(0).toInt(), colorList.at(1).toInt(),
+									colorList.at(2).toInt(), opacity)));
+				}
+
+				else if (reader.name() == "line")
+				{
+					attrs = reader.attributes();
+
+					colorString = attrs.value("style").toString();
+					colorList = colorString.split(QRegExp(QString("[stroke:rgb(),]+")), QString::SkipEmptyParts);
+
+					opacityString = attrs.value("opacity").toString();
+					opacity = (int)floor(((opacityString.toFloat())*255.0) + 0.5);
+
+					QString xString = attrs.value("x1").toString();
+					float x1 = xString.toFloat();
+
+					QString yString = attrs.value("y1").toString();
+					float y1 = yString.toFloat();
+
+					QString wString = attrs.value("x2").toString();
+					float x2 = wString.toFloat();
+
+					QString hString = attrs.value("y2").toString();
+					float y2 = hString.toFloat();
+
+					shapes.append(new MutableLine(original.width(),
+								original.height(), x1, y1, x2, y2,
+								QColor(colorList.at(0).toInt(), colorList.at(1).toInt(),
+									colorList.at(2).toInt(), opacity)));
 				}
 			}
 		}
@@ -179,17 +219,19 @@ bool ImageMutationCore::loadImage(QString &path)
 	{
 		if (painter.isActive())
 			painter.end();
-		current = QImage(original.width(), original.height(), QImage::Format_RGB32);
-		painter.begin(&current);
-		painter.setRenderHint(QPainter::Antialiasing);
 
 		shapes.removeAll();
-		shapes.prepend(new BackgroundRect(original.width(), original.height(), QColor(255, 255, 255)));
+		shapes.prepend(new BackgroundRect(original.width(),
+					original.height(), QColor(255, 255, 255)));
 		seedPolygons();
-		drawPolygons();
 
+		current = QImage(original.width(), original.height(), QImage::Format_RGB32);
+		painter.begin(&current);
 		painter.setPen(Qt::NoPen);
+		painter.setRenderHint(QPainter::Antialiasing);
 		shapes.get(0)->draw(&painter);
+
+		drawPolygons();
 
 		bestScore = 255*3*original.width()*original.height();
 		goodMutationCount = 0;
@@ -211,7 +253,6 @@ bool ImageMutationCore::saveBestImage(QString path)
 
 	painter.begin(&best);
 	painter.setRenderHint(QPainter::Antialiasing);
-
 	painter.setPen(Qt::NoPen);
 
 	for (int x = 0; x < shapes.size(); x++)
@@ -221,10 +262,9 @@ bool ImageMutationCore::saveBestImage(QString path)
 
 	painter.end();
 	painter.begin(&current);
-	painter.setRenderHint(QPainter::Antialiasing);
 
-	//painter.setRenderHint(QPainter::Antialiasing, false);
 	painter.setPen(Qt::NoPen);
+	painter.setRenderHint(QPainter::Antialiasing);
 
 	bool retValue = best.save(path, "PNG", 100);
 
@@ -378,7 +418,9 @@ void ImageMutationCore::mutate()
 				addedIndex = 1;
 
 			int rand = Utils::getRand(shapesToUse.size());
-			shapes.insert(addedIndex, MutableColorShapeFactory::createShape(shapesToUse.at(rand), original.width(), original.height()));
+			shapes.insert(addedIndex,
+					MutableColorShapeFactory::createShape(shapesToUse.at(rand),
+						original.width(), original.height()));
 
 			added=true;
 			changed=true;
@@ -465,7 +507,8 @@ void ImageMutationCore::countScore()
 {
 	for(int x=0; x<counters.size(); x++)
 	{
-		counters.get(x)->setImages((QRgb*)original.scanLine(0), (QRgb*)current.scanLine(0), current.width(), current.height());
+		counters.get(x)->setImages((QRgb*)original.scanLine(0),
+				(QRgb*)current.scanLine(0), current.width(), current.height());
 		counters.get(x)->startCounting();
 	}
 
@@ -496,7 +539,8 @@ void ImageMutationCore::seedPolygons()
 	for (int x = 0; x < 5; x++)
 	{
 		int rand = Utils::getRand(shapesToUse.size());
-		shapes.append(MutableColorShapeFactory::createShape(shapesToUse.at(rand), original.width(), original.height()));
+		shapes.append(MutableColorShapeFactory::createShape(shapesToUse.at(rand),
+					original.width(), original.height()));
 	}
 }
 
@@ -552,15 +596,16 @@ int ImageMutationCore::countThreads()
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MACX)
 	cpuCount = sysconf(_SC_NPROCESSORS_ONLN);
 #elif defined(Q_OS_MACX)
-	kern_return_t		kr;
-	struct host_basic_info	hostinfo;
-	unsigned int			count;
+	kern_return_t           kr;
+	struct host_basic_info  hostinfo;
+	unsigned int                    count;
 
 	count = HOST_BASIC_INFO_COUNT;
-	kr = host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostinfo, &count);
+	kr = host_info(mach_host_self(), HOST_BASIC_INFO,
+			(host_info_t)&hostinfo, &count);
 	if(kr == KERN_SUCCESS) {
 		cpuCount = hostinfo.avail_cpus;
-		//	totalMemory = hostinfo.memory_size; 			 //in bytes
+		//      totalMemory = hostinfo.memory_size;                      //in bytes
 	}
 
 #endif

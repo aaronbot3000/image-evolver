@@ -1,3 +1,6 @@
+v3.3
+Add support for mutating with only lines
+
 v3.2
 
 Fix autosaving. It now autosaves every 1000 good mutations instead of every

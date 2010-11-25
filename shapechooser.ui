@@ -55,7 +55,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>46</y>
+     <y>50</y>
      <width>101</width>
      <height>18</height>
     </rect>
@@ -81,6 +81,19 @@
    </property>
    <property name="checked">
     <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="lineCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>48</y>
+     <width>94</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lines</string>
    </property>
   </widget>
  </widget>

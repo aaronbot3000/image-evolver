@@ -26,6 +26,7 @@ ShapeChooser::ShapeChooser(QWidget *parent, ImageMutationCore *i):
     ui->polygonCheckBox->setChecked(im->isShapeEnabled(0));
     ui->rectangleCheckBox->setChecked(im->isShapeEnabled(1));
     ui->ellipseCheckBox->setChecked(im->isShapeEnabled(2));
+	ui->lineCheckBox->setChecked(im->isShapeEnabled(3));
 }
 
 ShapeChooser::~ShapeChooser()
@@ -37,7 +38,8 @@ void ShapeChooser::accept()
 {
     if (ui->polygonCheckBox->isChecked() == false &&
         ui->rectangleCheckBox->isChecked() == false &&
-        ui->ellipseCheckBox->isChecked() == false)
+		ui->ellipseCheckBox->isChecked() == false &&
+		ui->lineCheckBox->isChecked() == false)
     {
         QMessageBox::critical(this, tr("Shape Choosing Human Error"), tr("Must have some shape checked"));
         return;
@@ -57,6 +59,11 @@ void ShapeChooser::accept()
         im->enableShape(2);
     else
         im->disableShape(2);
+
+	if (ui->lineCheckBox->isChecked())
+		im->enableShape(3);
+	else
+		im->disableShape(3);
 
     QDialog::accept();
 }

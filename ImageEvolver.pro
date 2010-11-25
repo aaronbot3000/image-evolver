@@ -10,6 +10,7 @@ HEADERS += utils.h \
     mutableellipse.h \
     mutablecolorshapefactory.h \
     mutablecolorshape.h \
+	mutableline.h \
     mainwindow.h \
     linkedlist.h \
     imagemutationcore.h \
@@ -23,6 +24,7 @@ SOURCES += utils.cpp \
     mutablepolygon.cpp \
     mutablepoint.cpp \
     mutableellipse.cpp \
+	mutableline.cpp \
     mersenne.cpp \
     mainwindow.cpp \
     main.cpp \
