@@ -193,7 +193,7 @@ bool ImageMutationCore::loadSVG(QString &path)
 				}
 			}
 		}
-		bestScore = 255*3*original.width()*original.height();
+		bestScore = 255*255*3*original.width()*original.height();
 
 		drawPolygons();
 		countScore();
@@ -233,7 +233,7 @@ bool ImageMutationCore::loadImage(QString &path)
 
 		drawPolygons();
 
-		bestScore = 255*3*original.width()*original.height();
+		bestScore = 255*255*3*original.width()*original.height();
 		goodMutationCount = 0;
 		testedMutationCount = 0;
 	}
@@ -522,9 +522,13 @@ void ImageMutationCore::countScore()
 
 	for (unsigned int x=startPixel; x<endPixel; x++)
 	{
-		currentScore += fabs((float)(qRed(c[x]) - qRed(o[x]))) +
-			fabs((float)(qGreen(c[x]) - qGreen(o[x]))) +
-			fabs((float)(qBlue(c[x]) - qBlue(o[x])));
+        currentScore +=
+            (long)(qRed(c[x]) - qRed(o[x])) * 
+				(long)(qRed(c[x]) - qRed(o[x])) +
+            (long)(qGreen(c[x]) - qGreen(o[x])) * 
+				(long)(qGreen(c[x]) - qGreen(o[x])) +
+            (long)(qBlue(c[x]) - qBlue(o[x])) * 
+				(long)(qBlue(c[x]) - qBlue(o[x]));
 	}
 
 	for (int x=0; x<counters.size(); x++)
@@ -546,7 +550,7 @@ void ImageMutationCore::seedPolygons()
 
 double ImageMutationCore::getCurrentScore()
 {
-	return (1.0-((double)bestScore/(double)(255*3*original.width()*original.height())))*100.0;
+	return (1.0-((double)bestScore/(double)(255*255*3*original.width()*original.height())))*100.0;
 }
 
 unsigned int ImageMutationCore::getGoodMutationCount()

@@ -64,9 +64,12 @@ void PixelCounter::run()
     for (unsigned int x=startPixel; x<endPixel; x++)
     {
         diff +=
-            (fabs((float)(qRed(current[x]) - qRed(original[x]))) +
-            fabs((float)(qGreen(current[x]) - qGreen(original[x]))) +
-            fabs((float)(qBlue(current[x]) - qBlue(original[x]))));
+            (long)(qRed(current[x]) - qRed(original[x])) * 
+				(long)(qRed(current[x]) - qRed(original[x])) +
+            (long)(qGreen(current[x]) - qGreen(original[x])) * 
+				(long)(qGreen(current[x]) - qGreen(original[x])) +
+            (long)(qBlue(current[x]) - qBlue(original[x])) * 
+				(long)(qBlue(current[x]) - qBlue(original[x]));
     }
 }
 
